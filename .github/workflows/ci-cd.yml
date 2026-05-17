@@ -19,10 +19,16 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: Build the Docker image
-        run: |
-          docker build . andreesharygin/fastapi-ci-cd:${{ github.sha }}
+      - name: Build Docker-image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: andreesharygin/fastapi-ci-cd:${{ github.sha }}
 
-      - name: Push the Docker image
-        run: |
-          docker push andreesharygin/fastapi-ci-cd:${{ github.sha }}
+      - name: Push Docker-image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: andreesharygin/fastapi-ci-cd:${{ github.sha }}
